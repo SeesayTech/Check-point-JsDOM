@@ -1,8 +1,13 @@
 //Nous récupérons tous les éléments ayant comme class "fa-heart", qui représente ici les icones en forme de coeur.
 let btn_like = document.querySelectorAll(".fa-heart");
-let plus = document.getElementById('plus')
+let bag_plus = document.getElementById('plus');
+let bag_minus = document.getElementById('moins');
+let bag_counter = document.getElementById('bag-counter');
+let counter = 0;
 
-console.log(btn_like);
+window.document.onload = ()=>{
+  bag_counter.innerHTML=`${counter}`;
+}
 
 /*
 Pour avoir utilisé querySelectorAll, nous aurons une liste d'élément sous forme d'objet.
@@ -16,16 +21,18 @@ for (i = 0; i < btn_like.length; i++) {
 }
 
 function colorChanger(e) {
-    e.preventDefault();
-  if (!this.classList.contains("red")) this.classList.add("red");
-  else this.classList.remove("red");
-}
-
-
-plus.onclick= ()=>{
-    console.log('+')
-}
-  function yokk(){
-    counter = 0
-    this.innerHTML = counter++
+  e.preventDefault();
+  if (!this.classList.contains("red")) {
+    this.classList.add("red");
+  } else {
+    this.classList.remove("red");
   }
+}
+
+bag_plus.addEventListener('click',yokk);
+function yokk() {
+  
+  console.log(counter);
+  counter++;
+  bag_counter.innerHTML=`${counter}`;
+}
