@@ -6,13 +6,13 @@ let socks_i = 0;
 let result = 0;
 let total = document.querySelector(".total");
 let btn_like = document.querySelectorAll(".fa-heart");
+let btn_trash = document.querySelectorAll(".fa-trash-alt");
 let card = document.querySelectorAll(".card-body");
 // bag elements
 let bagUnit = document.querySelector("#bag-unit").innerHTML.replace("$", "");
 let bag_plus = document.getElementById("bag-plus");
 let bag_minus = document.getElementById("bag-minus");
 let bag_counter = document.getElementById("bag-counter");
-let bagTrash = document.getElementById("bagTrash");
 // socks elements
 let socksUnit = document
   .querySelector("#socks-unit")
@@ -63,7 +63,7 @@ class CardOperation {
     result += parseInt(this.unit);
     total.innerHTML = `${result} $`;
   }
-  remove() {
+  del() {
     if (this.iteration > 0) {
       this.iteration--;
       this.counter.innerHTML = `${this.iteration}`;
@@ -78,19 +78,28 @@ bag_plus.addEventListener("click", () => {
   bag.add();
 });
 bag_minus.addEventListener("click", () => {
-  bag.remove();
+  bag.del();
 });
 const socks = new CardOperation(socks_i, socks_counter, socksUnit);
 socks_plus.addEventListener("click", () => {
   socks.add();
 });
 socks_minus.addEventListener("click", () => {
-  socks.remove();
+  socks.del();
 });
 const baskets = new CardOperation(baskets_i, baskets_counter, basketsUnit);
 baskets_plus.addEventListener("click", () => {
   baskets.add();
 });
 baskets_minus.addEventListener("click", () => {
-  baskets.remove();
+  baskets.del();
 });
+btn_trash.forEach((el) => {
+  el.addEventListener("click", removeItem);
+});
+
+function removeItem() {
+  //remover
+  let item = this.offsetParent.parentElement;
+  item.remove();
+}
