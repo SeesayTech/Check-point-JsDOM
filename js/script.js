@@ -1,4 +1,4 @@
-//Nous récupérons tous les éléments ayant comme class "fa-heart", qui représente ici les icones en forme de coeur.
+//Nous récupérons tous les éléments dont nous aurons besoin pour manipuler le DOM
 //initialisation de variables
 let result = 0;
 let total = document.querySelector(".total");
@@ -50,19 +50,21 @@ function colorChanger(e) {
   }
 }
 
+// Création de la class CardOperation qui va nous permettre de réaliser les opérations souhaitées grace à ses méthodes
 class CardOperation {
   constructor(iteration, counter, unit) {
     this.iteration = iteration;
     this.counter = counter;
     this.unit = unit;
   }
-
+//Methode add() : Permet d'incrémenter le nombre d'article au clic sur une icône "Plus"
   add() {
     this.iteration++;
     this.counter.innerHTML = `${this.iteration}`;
     result += parseInt(this.unit);
     total.innerHTML = `${result} $`;
   }
+//Methode del() : Permet de décrémenter le nombre d'article au clic sur une icône "Moins"
   del() {
     if (this.iteration > 0) {
       this.iteration--;
@@ -71,50 +73,52 @@ class CardOperation {
       total.innerHTML = `${result} $`;
     }
   }
+//Methode toZero() : Permet de réinitialiser le nombre d'article à 0 au clic sur une icône "Trash"
   toZero(unit, counter){
-    let rem = 0;
-    rem = unit * counter.innerHTML;
-    result -= rem;
+    let withdraw = 0;
+    withdraw = unit * counter.innerHTML;
+    result -= withdraw;
     total.innerHTML = `${result} $`;
   }
 }
 
 const bag = new CardOperation(bag_i, bag_counter, bagUnit);
 bag_plus.addEventListener("click", () => {
-  bag.add();
+  bag.add();//invocation de la méthode add()
 });
 bag_minus.addEventListener("click", () => {
-  bag.del();
+  bag.del();//invocation de la méthode del()
 });
 const socks = new CardOperation(socks_i, socks_counter, socksUnit);
 socks_plus.addEventListener("click", () => {
-  socks.add();
+  socks.add();//invocation de la méthode add()
 });
 socks_minus.addEventListener("click", () => {
-  socks.del();
+  socks.del();//invocation de la méthode del()
 });
 const baskets = new CardOperation(baskets_i, baskets_counter, basketsUnit);
 baskets_plus.addEventListener("click", () => {
-  baskets.add();
+  baskets.add();//invocation de la méthode add()
 });
 baskets_minus.addEventListener("click", () => {
-  baskets.del();
+  baskets.del();//invocation de la méthode del()
 });
 btn_trash.forEach((el) => {
   el.addEventListener("click", removeItem);
 });
 
+//Cette fonction permet de supprimer un article au clic sur une icône "Trash"
 function removeItem() {
   //remover
   let item = this.offsetParent.parentElement;
   if (this.id == "basketsTrash") {
-    baskets.toZero(basketsUnit, baskets_counter)
+    baskets.toZero(basketsUnit, baskets_counter)//invocation de la méthode toZero()
     item.remove();
   } else if (this.id == "socksTrash") {
-    socks.toZero(socksUnit, socks_counter)
+    socks.toZero(socksUnit, socks_counter)//invocation de la méthode toZero()
     item.remove();
   } else if (this.id == "bagTrash") {
-    bag.toZero(bagUnit, bag_counter)
+    bag.toZero(bagUnit, bag_counter)//invocation de la méthode toZero()
     item.remove();
   }
   console.log(this.id);
