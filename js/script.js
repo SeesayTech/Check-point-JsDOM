@@ -1,19 +1,18 @@
 //Nous récupérons tous les éléments ayant comme class "fa-heart", qui représente ici les icones en forme de coeur.
 //initialisation de variables
-let bag_i = 0;
-let baskets_i = 0;
-let socks_i = 0;
 let result = 0;
 let total = document.querySelector(".total");
 let btn_like = document.querySelectorAll(".fa-heart");
 let btn_trash = document.querySelectorAll(".fa-trash-alt");
 let card = document.querySelectorAll(".card-body");
 // bag elements
+let bag_i = 0;
 let bagUnit = document.querySelector("#bag-unit").innerHTML.replace("$", "");
 let bag_plus = document.getElementById("bag-plus");
 let bag_minus = document.getElementById("bag-minus");
 let bag_counter = document.getElementById("bag-counter");
 // socks elements
+let socks_i = 0;
 let socksUnit = document
   .querySelector("#socks-unit")
   .innerHTML.replace("$", "");
@@ -22,6 +21,7 @@ let socks_minus = document.getElementById("socks-minus");
 let socks_counter = document.getElementById("socks-counter");
 let socksTrash = document.getElementById("socksTrash");
 // baskets elements
+let baskets_i = 0;
 let basketsUnit = document
   .querySelector("#baskets-unit")
   .innerHTML.replace("$", "");
@@ -71,6 +71,12 @@ class CardOperation {
       total.innerHTML = `${result} $`;
     }
   }
+  toZero(unit, counter){
+    let rem = 0;
+    rem = unit * counter.innerHTML;
+    result -= rem;
+    total.innerHTML = `${result} $`;
+  }
 }
 
 const bag = new CardOperation(bag_i, bag_counter, bagUnit);
@@ -101,5 +107,15 @@ btn_trash.forEach((el) => {
 function removeItem() {
   //remover
   let item = this.offsetParent.parentElement;
-  item.remove();
+  if (this.id == "basketsTrash") {
+    baskets.toZero(basketsUnit, baskets_counter)
+    item.remove();
+  } else if (this.id == "socksTrash") {
+    socks.toZero(socksUnit, socks_counter)
+    item.remove();
+  } else if (this.id == "bagTrash") {
+    bag.toZero(bagUnit, bag_counter)
+    item.remove();
+  }
+  console.log(this.id);
 }
