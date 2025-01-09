@@ -121,5 +121,4 @@ function removeItem() {
     bag.toZero(bagUnit, bag_counter)//invocation de la méthode toZero()
     item.remove();
   }
-  console.log(this.id);
 }
